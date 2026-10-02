@@ -1,0 +1,771 @@
+{
+  "id": "cardio-cardiac-arrest",
+  "title": "Adult Cardiac Arrest",
+  "short": "Cardiac Arrest",
+  "guideline": "Original Cardio Guide protocol",
+  "source": "cardio",
+  "entry": "acls-md-start",
+  "nodes": {
+    "acls-md-start": {
+      "id": "acls-md-start",
+      "kind": "action",
+      "title": "Cardiac Arrest — Start CPR",
+      "question": null,
+      "bullets": [
+        [
+          "Confirm: no pulse, no normal breathing (agonal gasping only).\n\nStart high-quality CPR immediately:\n• Rate 100–120 compressions/min\n• Depth ≥ 2 in (5 cm) in adults\n• Allow full chest recoil between compressions\n• Minimize interruptions (< 10 sec)\n\nGive oxygen. Attach monitor/defibrillator as soon as available."
+        ]
+      ],
+      "choices": [
+        {
+          "label": "Monitor/defibrillator attached — Check rhythm",
+          "to": "acls-md-rhythm-check"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 0
+      },
+      "original": {
+        "id": "acls-md-start",
+        "type": "treatment",
+        "title": "Cardiac Arrest — Start CPR",
+        "question": null,
+        "info": "Confirm: no pulse, no normal breathing (agonal gasping only).\n\nStart high-quality CPR immediately:\n• Rate 100–120 compressions/min\n• Depth ≥ 2 in (5 cm) in adults\n• Allow full chest recoil between compressions\n• Minimize interruptions (< 10 sec)\n\nGive oxygen. Attach monitor/defibrillator as soon as available.",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Monitor/defibrillator attached — Check rhythm",
+            "nextNodeId": "acls-md-rhythm-check",
+            "warning": null
+          }
+        ],
+        "nextNodeId": null
+      }
+    },
+    "acls-md-rhythm-check": {
+      "id": "acls-md-rhythm-check",
+      "kind": "decision",
+      "title": "Rhythm Check",
+      "question": "Is the rhythm shockable?",
+      "bullets": [],
+      "choices": [
+        {
+          "label": "Shockable — VF / pulseless VT",
+          "to": "acls-md-shock-1"
+        },
+        {
+          "label": "Non-shockable — Asystole / PEA",
+          "to": "acls-md-nonshock-cpr"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 1
+      },
+      "original": {
+        "id": "acls-md-rhythm-check",
+        "type": "question",
+        "title": "Rhythm Check",
+        "question": "Is the rhythm shockable?",
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Shockable — VF / pulseless VT",
+            "nextNodeId": "acls-md-shock-1",
+            "warning": null
+          },
+          {
+            "text": "Non-shockable — Asystole / PEA",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-shock-1": {
+      "id": "acls-md-shock-1",
+      "kind": "action",
+      "title": "Shock #1 — Defibrillate",
+      "question": null,
+      "bullets": [],
+      "choices": [],
+      "next": "acls-md-cpr-after-shock-1",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 2
+      },
+      "original": {
+        "id": "acls-md-shock-1",
+        "type": "cardioversion",
+        "title": "Shock #1 — Defibrillate",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "cardioversion": {
+          "synchronized": false,
+          "energyJoules": 200,
+          "sedationRequired": false,
+          "sedationNote": null,
+          "repeatGuidance": "Resume CPR immediately after the shock — do not delay for a rhythm or pulse check.",
+          "notes": "Defibrillation. Standard AHA/ACLS algorithm — not from the JCS WCT PDF."
+        },
+        "nextNodeId": "acls-md-cpr-after-shock-1"
+      }
+    },
+    "acls-md-cpr-after-shock-1": {
+      "id": "acls-md-cpr-after-shock-1",
+      "kind": "action",
+      "title": "CPR × 2 min + IV/IO Access",
+      "question": null,
+      "bullets": [
+        [
+          "Resume CPR immediately for 2 minutes.\nEstablish IV or IO access.\nConsider an advanced airway and waveform capnography if not already placed."
+        ]
+      ],
+      "choices": [
+        {
+          "label": "2 minutes complete — Check rhythm",
+          "to": "acls-md-rhythm-check-2"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 3
+      },
+      "original": {
+        "id": "acls-md-cpr-after-shock-1",
+        "type": "treatment",
+        "title": "CPR × 2 min + IV/IO Access",
+        "question": null,
+        "info": "Resume CPR immediately for 2 minutes.\nEstablish IV or IO access.\nConsider an advanced airway and waveform capnography if not already placed.",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "2 minutes complete — Check rhythm",
+            "nextNodeId": "acls-md-rhythm-check-2",
+            "warning": null
+          }
+        ],
+        "nextNodeId": null
+      }
+    },
+    "acls-md-rhythm-check-2": {
+      "id": "acls-md-rhythm-check-2",
+      "kind": "decision",
+      "title": "Rhythm Check #2",
+      "question": "Is the rhythm shockable?",
+      "bullets": [],
+      "choices": [
+        {
+          "label": "Shockable — VF / pulseless VT",
+          "to": "acls-md-shock-2"
+        },
+        {
+          "label": "Organized rhythm — check pulse",
+          "to": "acls-md-pulse-check"
+        },
+        {
+          "label": "Non-shockable — Asystole / PEA",
+          "to": "acls-md-nonshock-cpr"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 4
+      },
+      "original": {
+        "id": "acls-md-rhythm-check-2",
+        "type": "question",
+        "title": "Rhythm Check #2",
+        "question": "Is the rhythm shockable?",
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Shockable — VF / pulseless VT",
+            "nextNodeId": "acls-md-shock-2",
+            "warning": null
+          },
+          {
+            "text": "Organized rhythm — check pulse",
+            "nextNodeId": "acls-md-pulse-check",
+            "warning": null
+          },
+          {
+            "text": "Non-shockable — Asystole / PEA",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-shock-2": {
+      "id": "acls-md-shock-2",
+      "kind": "action",
+      "title": "Shock #2 — Defibrillate",
+      "question": null,
+      "bullets": [],
+      "choices": [],
+      "next": "acls-md-epi-1",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 5
+      },
+      "original": {
+        "id": "acls-md-shock-2",
+        "type": "cardioversion",
+        "title": "Shock #2 — Defibrillate",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "cardioversion": {
+          "synchronized": false,
+          "energyJoules": 200,
+          "sedationRequired": false,
+          "sedationNote": null,
+          "repeatGuidance": "Resume CPR immediately after the shock.",
+          "notes": "Defibrillation. Standard AHA/ACLS algorithm — not from the JCS WCT PDF."
+        },
+        "nextNodeId": "acls-md-epi-1"
+      }
+    },
+    "acls-md-epi-1": {
+      "id": "acls-md-epi-1",
+      "kind": "action",
+      "title": "CPR × 2 min + Epinephrine",
+      "question": null,
+      "bullets": [
+        [
+          "Resume CPR immediately for 2 minutes.\nGive Epinephrine 1 mg IV/IO — repeat every 3–5 minutes for the remainder of the arrest.\nConsider an advanced airway and capnography if not already placed."
+        ]
+      ],
+      "choices": [],
+      "next": "acls-md-rhythm-check-3",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 6
+      },
+      "original": {
+        "id": "acls-md-epi-1",
+        "type": "medication",
+        "title": "CPR × 2 min + Epinephrine",
+        "question": null,
+        "info": "Resume CPR immediately for 2 minutes.\nGive Epinephrine 1 mg IV/IO — repeat every 3–5 minutes for the remainder of the arrest.\nConsider an advanced airway and capnography if not already placed.",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "medications": [
+          "epinephrine"
+        ],
+        "nextNodeId": "acls-md-rhythm-check-3"
+      }
+    },
+    "acls-md-rhythm-check-3": {
+      "id": "acls-md-rhythm-check-3",
+      "kind": "decision",
+      "title": "Rhythm Check #3",
+      "question": "Is the rhythm shockable?",
+      "bullets": [],
+      "choices": [
+        {
+          "label": "Shockable — VF / pulseless VT",
+          "to": "acls-md-shock-3"
+        },
+        {
+          "label": "Organized rhythm — check pulse",
+          "to": "acls-md-pulse-check"
+        },
+        {
+          "label": "Non-shockable — Asystole / PEA",
+          "to": "acls-md-nonshock-cpr"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 7
+      },
+      "original": {
+        "id": "acls-md-rhythm-check-3",
+        "type": "question",
+        "title": "Rhythm Check #3",
+        "question": "Is the rhythm shockable?",
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Shockable — VF / pulseless VT",
+            "nextNodeId": "acls-md-shock-3",
+            "warning": null
+          },
+          {
+            "text": "Organized rhythm — check pulse",
+            "nextNodeId": "acls-md-pulse-check",
+            "warning": null
+          },
+          {
+            "text": "Non-shockable — Asystole / PEA",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-shock-3": {
+      "id": "acls-md-shock-3",
+      "kind": "action",
+      "title": "Shock #3 — Defibrillate",
+      "question": null,
+      "bullets": [],
+      "choices": [],
+      "next": "acls-md-antiarrhythmic",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 8
+      },
+      "original": {
+        "id": "acls-md-shock-3",
+        "type": "cardioversion",
+        "title": "Shock #3 — Defibrillate",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "cardioversion": {
+          "synchronized": false,
+          "energyJoules": 200,
+          "sedationRequired": false,
+          "sedationNote": null,
+          "repeatGuidance": "Resume CPR immediately after the shock.",
+          "notes": "Defibrillation. Standard AHA/ACLS algorithm — not from the JCS WCT PDF."
+        },
+        "nextNodeId": "acls-md-antiarrhythmic"
+      }
+    },
+    "acls-md-antiarrhythmic": {
+      "id": "acls-md-antiarrhythmic",
+      "kind": "action",
+      "title": "CPR × 2 min + Antiarrhythmic",
+      "question": null,
+      "bullets": [
+        [
+          "Resume CPR for 2 minutes.\nGive Amiodarone 300 mg IV/IO (first dose) OR Lidocaine 1–1.5 mg/kg IV/IO (first dose).\nContinue Epinephrine 1 mg IV/IO every 3–5 minutes."
+        ]
+      ],
+      "choices": [],
+      "next": "acls-md-reversible-causes",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 9
+      },
+      "original": {
+        "id": "acls-md-antiarrhythmic",
+        "type": "medication",
+        "title": "CPR × 2 min + Antiarrhythmic",
+        "question": null,
+        "info": "Resume CPR for 2 minutes.\nGive Amiodarone 300 mg IV/IO (first dose) OR Lidocaine 1–1.5 mg/kg IV/IO (first dose).\nContinue Epinephrine 1 mg IV/IO every 3–5 minutes.",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "medications": [
+          "amiodarone",
+          "lidocaine"
+        ],
+        "nextNodeId": "acls-md-reversible-causes"
+      }
+    },
+    "acls-md-reversible-causes": {
+      "id": "acls-md-reversible-causes",
+      "kind": "action",
+      "title": "Identify & Treat Reversible Causes (H's and T's)",
+      "question": null,
+      "bullets": [
+        [
+          "H's:\n• Hypovolemia\n• Hypoxia\n• Hydrogen ion (acidosis)\n• Hypo-/Hyperkalemia\n• Hypothermia\n\nT's:\n• Tension pneumothorax\n• Tamponade, cardiac\n• Toxins\n• Thrombosis, pulmonary\n• Thrombosis, coronary"
+        ]
+      ],
+      "choices": [
+        {
+          "label": "Reviewed — Check rhythm",
+          "to": "acls-md-rhythm-check-4"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 10
+      },
+      "original": {
+        "id": "acls-md-reversible-causes",
+        "type": "treatment",
+        "title": "Identify & Treat Reversible Causes (H's and T's)",
+        "question": null,
+        "info": "H's:\n• Hypovolemia\n• Hypoxia\n• Hydrogen ion (acidosis)\n• Hypo-/Hyperkalemia\n• Hypothermia\n\nT's:\n• Tension pneumothorax\n• Tamponade, cardiac\n• Toxins\n• Thrombosis, pulmonary\n• Thrombosis, coronary",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Reviewed — Check rhythm",
+            "nextNodeId": "acls-md-rhythm-check-4",
+            "warning": null
+          }
+        ],
+        "nextNodeId": null
+      }
+    },
+    "acls-md-rhythm-check-4": {
+      "id": "acls-md-rhythm-check-4",
+      "kind": "decision",
+      "title": "Rhythm Check",
+      "question": "Is the rhythm still shockable?",
+      "bullets": [
+        [
+          "Continue 2-minute CPR / rhythm-check cycles, shocking and re-dosing epinephrine (every 3–5 min) until ROSC, rhythm changes, or resuscitation is terminated."
+        ]
+      ],
+      "choices": [
+        {
+          "label": "Shockable — continue cycle (shock, CPR, epi q3–5min)",
+          "to": "acls-md-cycle-shock"
+        },
+        {
+          "label": "Organized rhythm — check pulse",
+          "to": "acls-md-pulse-check"
+        },
+        {
+          "label": "Non-shockable — Asystole / PEA",
+          "to": "acls-md-nonshock-cpr"
+        },
+        {
+          "label": "No ROSC after prolonged effort",
+          "to": "acls-md-termination"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 11
+      },
+      "original": {
+        "id": "acls-md-rhythm-check-4",
+        "type": "question",
+        "title": "Rhythm Check",
+        "question": "Is the rhythm still shockable?",
+        "info": "Continue 2-minute CPR / rhythm-check cycles, shocking and re-dosing epinephrine (every 3–5 min) until ROSC, rhythm changes, or resuscitation is terminated.",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Shockable — continue cycle (shock, CPR, epi q3–5min)",
+            "nextNodeId": "acls-md-cycle-shock",
+            "warning": null
+          },
+          {
+            "text": "Organized rhythm — check pulse",
+            "nextNodeId": "acls-md-pulse-check",
+            "warning": null
+          },
+          {
+            "text": "Non-shockable — Asystole / PEA",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          },
+          {
+            "text": "No ROSC after prolonged effort",
+            "nextNodeId": "acls-md-termination",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-cycle-shock": {
+      "id": "acls-md-cycle-shock",
+      "kind": "action",
+      "title": "Shock — Continue Cycle",
+      "question": null,
+      "bullets": [],
+      "choices": [],
+      "next": "acls-md-cycle-continue",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 12
+      },
+      "original": {
+        "id": "acls-md-cycle-shock",
+        "type": "cardioversion",
+        "title": "Shock — Continue Cycle",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "cardioversion": {
+          "synchronized": false,
+          "energyJoules": 200,
+          "sedationRequired": false,
+          "sedationNote": null,
+          "repeatGuidance": "Resume CPR immediately after the shock.",
+          "notes": "Defibrillation. Standard AHA/ACLS algorithm — not from the JCS WCT PDF."
+        },
+        "nextNodeId": "acls-md-cycle-continue"
+      }
+    },
+    "acls-md-cycle-continue": {
+      "id": "acls-md-cycle-continue",
+      "kind": "action",
+      "title": "CPR × 2 min — Continue Cycle",
+      "question": null,
+      "bullets": [
+        [
+          "Continue CPR for 2 minutes.\nGive Epinephrine 1 mg IV/IO if due (every 3–5 min).\nReassess reversible causes (H's and T's)."
+        ]
+      ],
+      "choices": [
+        {
+          "label": "2 minutes complete — Check rhythm",
+          "to": "acls-md-rhythm-check-4"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 13
+      },
+      "original": {
+        "id": "acls-md-cycle-continue",
+        "type": "treatment",
+        "title": "CPR × 2 min — Continue Cycle",
+        "question": null,
+        "info": "Continue CPR for 2 minutes.\nGive Epinephrine 1 mg IV/IO if due (every 3–5 min).\nReassess reversible causes (H's and T's).",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "2 minutes complete — Check rhythm",
+            "nextNodeId": "acls-md-rhythm-check-4",
+            "warning": null
+          }
+        ],
+        "nextNodeId": null
+      }
+    },
+    "acls-md-nonshock-cpr": {
+      "id": "acls-md-nonshock-cpr",
+      "kind": "action",
+      "title": "Non-Shockable Rhythm — CPR + Epinephrine",
+      "question": null,
+      "bullets": [
+        [
+          "Continue high-quality CPR for 2 minutes.\nEstablish IV/IO access.\nGive Epinephrine 1 mg IV/IO as soon as possible — repeat every 3–5 minutes.\nConsider an advanced airway and capnography.\nIdentify and treat reversible causes (H's and T's)."
+        ]
+      ],
+      "choices": [],
+      "next": "acls-md-nonshock-rhythm-check",
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 14
+      },
+      "original": {
+        "id": "acls-md-nonshock-cpr",
+        "type": "medication",
+        "title": "Non-Shockable Rhythm — CPR + Epinephrine",
+        "question": null,
+        "info": "Continue high-quality CPR for 2 minutes.\nEstablish IV/IO access.\nGive Epinephrine 1 mg IV/IO as soon as possible — repeat every 3–5 minutes.\nConsider an advanced airway and capnography.\nIdentify and treat reversible causes (H's and T's).",
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "medications": [
+          "epinephrine"
+        ],
+        "nextNodeId": "acls-md-nonshock-rhythm-check"
+      }
+    },
+    "acls-md-nonshock-rhythm-check": {
+      "id": "acls-md-nonshock-rhythm-check",
+      "kind": "decision",
+      "title": "Rhythm Check",
+      "question": "Is the rhythm shockable now?",
+      "bullets": [],
+      "choices": [
+        {
+          "label": "Shockable — VF / pulseless VT",
+          "to": "acls-md-shock-2"
+        },
+        {
+          "label": "Organized rhythm — check pulse",
+          "to": "acls-md-pulse-check"
+        },
+        {
+          "label": "Non-shockable — continue cycle",
+          "to": "acls-md-nonshock-cpr"
+        },
+        {
+          "label": "No ROSC after prolonged effort",
+          "to": "acls-md-termination"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 15
+      },
+      "original": {
+        "id": "acls-md-nonshock-rhythm-check",
+        "type": "question",
+        "title": "Rhythm Check",
+        "question": "Is the rhythm shockable now?",
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Shockable — VF / pulseless VT",
+            "nextNodeId": "acls-md-shock-2",
+            "warning": null
+          },
+          {
+            "text": "Organized rhythm — check pulse",
+            "nextNodeId": "acls-md-pulse-check",
+            "warning": null
+          },
+          {
+            "text": "Non-shockable — continue cycle",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          },
+          {
+            "text": "No ROSC after prolonged effort",
+            "nextNodeId": "acls-md-termination",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-pulse-check": {
+      "id": "acls-md-pulse-check",
+      "kind": "decision",
+      "title": "Organized Rhythm — Pulse Check",
+      "question": "Does the patient have a pulse?",
+      "bullets": [],
+      "choices": [
+        {
+          "label": "Pulse present — ROSC achieved",
+          "to": "acls-md-rosc"
+        },
+        {
+          "label": "No pulse (PEA)",
+          "to": "acls-md-nonshock-cpr"
+        }
+      ],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 16
+      },
+      "original": {
+        "id": "acls-md-pulse-check",
+        "type": "question",
+        "title": "Organized Rhythm — Pulse Check",
+        "question": "Does the patient have a pulse?",
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [
+          {
+            "text": "Pulse present — ROSC achieved",
+            "nextNodeId": "acls-md-rosc",
+            "warning": null
+          },
+          {
+            "text": "No pulse (PEA)",
+            "nextNodeId": "acls-md-nonshock-cpr",
+            "warning": null
+          }
+        ]
+      }
+    },
+    "acls-md-rosc": {
+      "id": "acls-md-rosc",
+      "kind": "outcome",
+      "title": "ROSC — Post-Cardiac Arrest Care",
+      "question": null,
+      "bullets": [
+        [
+          "Return of Spontaneous Circulation (ROSC) achieved.\n\nPost-cardiac arrest care:\n• Optimize ventilation/oxygenation (titrate SpO₂ ≥ 94%, avoid hyperventilation)\n• Treat hypotension (IV/IO fluid bolus, vasopressor infusion)\n• Obtain a 12-lead ECG\n• Consider targeted temperature management if the patient remains comatose\n• Identify and treat reversible causes\n• Transport to an appropriate facility with continuous reassessment"
+        ]
+      ],
+      "choices": [],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 17
+      },
+      "original": {
+        "id": "acls-md-rosc",
+        "type": "terminal",
+        "title": "ROSC — Post-Cardiac Arrest Care",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "disposition": "Return of Spontaneous Circulation (ROSC) achieved.\n\nPost-cardiac arrest care:\n• Optimize ventilation/oxygenation (titrate SpO₂ ≥ 94%, avoid hyperventilation)\n• Treat hypotension (IV/IO fluid bolus, vasopressor infusion)\n• Obtain a 12-lead ECG\n• Consider targeted temperature management if the patient remains comatose\n• Identify and treat reversible causes\n• Transport to an appropriate facility with continuous reassessment",
+        "nextNodeId": null
+      }
+    },
+    "acls-md-termination": {
+      "id": "acls-md-termination",
+      "kind": "outcome",
+      "title": "Consider Termination of Resuscitation",
+      "question": null,
+      "bullets": [
+        [
+          "Consider termination of resuscitation per local protocol, medical control, and clinical judgment (e.g., prolonged downtime, no reversible causes identified, advance directives). This decision should be made together with medical direction."
+        ]
+      ],
+      "choices": [],
+      "primaryLabel": "Continue",
+      "detail": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+      "map": {
+        "col": 0,
+        "row": 18
+      },
+      "original": {
+        "id": "acls-md-termination",
+        "type": "terminal",
+        "title": "Consider Termination of Resuscitation",
+        "question": null,
+        "info": null,
+        "warning": "Cardiac Arrest Protocol Algorithm*\n* From AHA/ACC and ESC updated guidelines/JCS adoption.",
+        "answers": [],
+        "disposition": "Consider termination of resuscitation per local protocol, medical control, and clinical judgment (e.g., prolonged downtime, no reversible causes identified, advance directives). This decision should be made together with medical direction.",
+        "nextNodeId": null
+      }
+    }
+  },
+  "codeMode": false,
+  "blurb": "Original Cardio Guide cardiac arrest pathway"
+}
