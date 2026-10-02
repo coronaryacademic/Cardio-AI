@@ -1,0 +1,154 @@
+{
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "highAlert": "High-alert",
+    "ems": "EMS",
+    "emsArabic": "الدفاع المدني",
+    "physician": "Physician",
+    "dose": "Dose",
+    "route": "Route",
+    "brandName": "WCT & Cardiac Arrest Protocols",
+    "brandAccent": "Emergency Protocols",
+    "logoAlt": "Jordan Cardiac Society",
+    "continueProtocol": "Continue Protocol",
+    "continueToNextStep": "Continue to Next Step",
+    "returnToProtocols": "Return to Protocols",
+    "medAdministered": "{{name}} administered"
+  },
+  "layout": {
+    "header": {
+      "modeBadgeTitle": "Change role in Settings"
+    },
+    "nav": {
+      "protocols": "Protocols",
+      "medications": "Meds",
+      "settings": "Settings"
+    }
+  },
+  "splash": {
+    "tagline": "Emergency Protocols",
+    "titleLine1": "WCT & Cardiac Arrest Protocols",
+    "titleLine2": "",
+    "offlineNote": "Works offline · no signal required",
+    "poweredBy": "Powered by Specto Ltd. · © 2026"
+  },
+  "selectMode": {
+    "title": "Choose your clinical mode",
+    "subtitle": "This sets the depth of the protocols shown.",
+    "emsDescription": "Pre-hospital focused pathways",
+    "physicianDescription": "Comprehensive clinical pathways",
+    "footnote": "You can change this later in Settings."
+  },
+  "protocols": {
+    "title": "Protocols",
+    "subtitle": "Select a clinical pathway",
+    "emptyTitle": "No protocols available",
+    "emptyHint": "There are no protocols assigned to your current role.",
+    "badgeQuickReference": "Quick reference",
+    "badgeDecisionPathway": "Decision pathway",
+    "footer": ""
+  },
+  "protocolDetail": {
+    "medsButton": "Meds",
+    "moreActionsTitle": "More actions",
+    "restartProtocol": "Restart protocol",
+    "exitToProtocols": "Exit to protocols",
+    "algorithmAlt": "WCT Quick Pocket Algorithm",
+    "protocolComplete": "Protocol Complete",
+    "backToProtocols": "Back to Protocols",
+    "startOver": "Start Over",
+    "confirmExitTitle": "Leave this protocol?",
+    "confirmRestartTitle": "Restart protocol?",
+    "confirmBody": "Your progress through the decision tree will be cleared.",
+    "confirmLeaveButton": "Leave",
+    "confirmRestartButton": "Restart",
+    "notFoundTitle": "Protocol not found"
+  },
+  "medications": {
+    "title": "Medications",
+    "subtitle": "Reference dosing and administration",
+    "searchPlaceholder": "Search medications, class...",
+    "emptyTitle": "No medications found",
+    "emptyHint": "Try adjusting your search terms.",
+    "emptyHintShort": "Try adjusting your search.",
+    "groupAll": "All",
+    "groupAntiarrhythmic": "Antiarrhythmic",
+    "groupBetaBlocker": "Beta-blocker",
+    "groupCalciumBlocker": "Calcium blocker",
+    "groupSedative": "Sedative",
+    "groupVasopressor": "Vasopressor",
+    "groupElectrolyte": "Electrolyte",
+    "groupOther": "Other"
+  },
+  "medicationDetail": {
+    "dosingHeading": "Dosing",
+    "doseFullLabel": "Full",
+    "maxLabel": "Max",
+    "repeatLabel": "Repeat",
+    "contraindications": "Contraindications",
+    "warnings": "Warnings",
+    "notes": "Notes",
+    "administrationLog": "Administration Log",
+    "dosesCount": "{{count}} doses",
+    "doseNumber": "Dose {{number}}",
+    "markRepeatDose": "Mark repeat dose given",
+    "markGiven": "Mark given · {{dose}}",
+    "loadErrorTitle": "Failed to load medication",
+    "loadErrorMessage": "Please try again.",
+    "backToList": "Back to list",
+    "toastGivenDetail": "{{dose}} via {{route}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "clinicalRoleTitle": "Clinical Role",
+    "clinicalRoleDescription": "Determines the depth of clinical protocols shown.",
+    "emsDescription": "Pre-hospital pathways",
+    "physicianDescription": "Comprehensive pathways",
+    "roleChangeNote": "Changing your role changes which protocols are available.",
+    "appearanceTitle": "Appearance",
+    "appearanceDescription": "Customize the application interface.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "version": "Emergency Protocols v0.2.0",
+    "guidelinesNote": "Based on Jordan Cardiac Society Guidelines",
+    "source": "Source: JCS Taskforce Congress · October 2025",
+    "poweredBy": "Powered by Specto Ltd.",
+    "copyright": "© 2026 Specto Ltd. All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "That screen doesn't exist. Let's get you back to the protocols."
+  },
+  "clinical": {
+    "cardioversion": {
+      "title": "Cardioversion",
+      "sedationRequiredLabel": "Sedation Required — Tap for Guidance",
+      "sedationGuidanceLabel": "Sedation Guidance",
+      "repeatGuidanceLabel": "If Unsuccessful / Repeat Guidance",
+      "energyLevel": "Energy Level",
+      "joulesUnit": "J",
+      "synchronized": "Synchronized",
+      "shockHistory": "Shock History",
+      "shockLabel": "Shock {{num}}",
+      "recordOutcomeHint": "After delivering, record the outcome to continue",
+      "shockDelivered": "Shock Delivered",
+      "shockDeliveredToast": "Shock delivered — {{energy}} J",
+      "shockLoggedDescription": "Logged at time of delivery"
+    },
+    "medicationCard": {
+      "given": "Given",
+      "markGiven": "Mark Given"
+    },
+    "warningBanner": {
+      "criticalEyebrow": "Critical",
+      "clinicalWarningEyebrow": "Clinical Warning"
+    },
+    "infoPanel": {
+      "checklistLabel": "Checklist"
+    }
+  }
+}

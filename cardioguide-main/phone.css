@@ -1,0 +1,43 @@
+html{width:100%;min-height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-width:0;min-height:100svh}
+*,*::before,*::after{box-sizing:border-box}
+@media(max-width:640px), (max-height:520px) and (orientation:landscape){
+  body{overflow-wrap:break-word}
+  app-root,main,app-splash{min-width:0;max-width:100%}
+  img{max-width:100%;height:auto}
+  button,input,select,textarea{font-size:16px}
+  button{min-height:44px;touch-action:manipulation}
+  a,summary{touch-action:manipulation}
+  .cg-home-page app-splash>div{min-height:100svh;padding:24px 16px max(16px,env(safe-area-inset-bottom));}
+  .cg-home-page app-splash>div>div:first-of-type{gap:16px}
+  .cg-home-page #cg-library{margin:12px 0 8px}
+  .cg-home-page #cg-library>h2{font-size:18px;margin-bottom:12px}
+  .cg-home-page .cg-green{margin:12px 0;padding:16px 18px;min-height:56px;font-size:17px;border-radius:14px}
+  .cg-home-page .cg-watermark{margin:12px auto 0;padding:0;font-size:10px;line-height:1.55}
+  .cg-home-page app-splash h1{font-size:28px}
+  body:has(.cg-home-link){padding-top:calc(48px + env(safe-area-inset-top))}
+  .cg-home-link{left:0;right:0;top:0;bottom:auto;width:100%;height:calc(48px + env(safe-area-inset-top));min-height:48px;padding:env(safe-area-inset-top) max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left));border-radius:0;border:0;justify-content:flex-start;box-shadow:0 1px 4px #0002}
+  body:has(.cg-home-link) header.sticky{top:calc(48px + env(safe-area-inset-top))!important}
+  body:has(.cg-home-link) main{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  .cg-wct-page app-layout>div{height:calc(100dvh - 48px - env(safe-area-inset-top));min-height:0}
+  .cg-wct-page app-layout>div>header{height:auto;min-height:56px;padding:10px 12px;gap:8px}
+  .cg-wct-page app-layout>div>header>a{min-width:0;flex:1;font-size:14px;line-height:1.35}
+  .cg-wct-page app-layout>div>header>div{flex-shrink:0}
+  .cg-wct-page app-layout>div>header>div a{font-size:10px;padding:4px 7px}
+  .cg-wct-page app-layout>div>main{min-height:0;overflow:auto;padding-bottom:0;}
+  .cg-wct-page body:has(.cg-home-link) main{padding-bottom:0}
+  .cg-wct-page app-protocol-runner{display:flex;flex-direction:column;flex:1;min-height:0}
+  .cg-wct-page app-protocol-runner>div{height:100%;min-height:0;flex:1}
+  .cg-wct-page app-layout>div>nav{padding-bottom:env(safe-area-inset-bottom);height:calc(64px + env(safe-area-inset-bottom))}
+}
+@media(max-height:520px) and (orientation:landscape){
+  .cg-home-page app-splash>div{padding-top:16px}
+  .cg-home-page app-splash>div>div:first-of-type{justify-content:flex-start;gap:12px}
+  .cg-home-page #cg-library{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cg-home-page #cg-library>h2{grid-column:1/-1;margin:0}
+  .cg-home-page .cg-green{margin:0}
+}
+
+/* Preserved protocol buttons also keep white text on a dark green fill. */
+button.bg-primary,a.bg-primary{background-color:#147d2b;color:#fff}
+button.bg-primary:hover,a.bg-primary:hover,button.bg-primary:active,a.bg-primary:active{background-color:#106b25;color:#fff}

@@ -1,0 +1,1827 @@
+[
+  {
+    "id": "cardiac-arrest",
+    "title": "Adult Cardiac Arrest",
+    "short": "Cardiac Arrest",
+    "guideline": "AHA Guidelines 2025 · Adult ACLS",
+    "codeMode": true,
+    "entry": "start",
+    "accent": "#E11D48",
+    "icon": "ecg_heart",
+    "blurb": "VF/pVT · Asystole · PEA — CPR cycles, shocks, epinephrine timing",
+    "mapCols": [
+      "Shockable — VF/pVT",
+      "Nonshockable — Asystole/PEA"
+    ],
+    "nodes": {
+      "start": {
+        "id": "start",
+        "kind": "action",
+        "num": 1,
+        "title": "Start CPR",
+        "bullets": [
+          [
+            {
+              "b": "Push hard and fast"
+            },
+            " — begin high-quality compressions immediately"
+          ],
+          [
+            "Give oxygen — bag-mask ventilation"
+          ],
+          [
+            "Attach monitor / defibrillator"
+          ]
+        ],
+        "detail": "Compress 2–2.4 in (5–6 cm) at 100–120/min with full recoil; minimize interruptions (target chest-compression fraction > 80%). Rotate compressors every 2 minutes. 30:2 with bag-mask; avoid excessive ventilation.",
+        "primaryLabel": "CPR started — check rhythm",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "next": "rhythm1",
+        "map": {
+          "col": 0,
+          "row": 0,
+          "span": 2
+        }
+      },
+      "rhythm1": {
+        "id": "rhythm1",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — VF / pVT",
+            "sub": "Shockable",
+            "to": "vf",
+            "log": "Rhythm: VF/pVT (shockable)",
+            "tone": "danger"
+          },
+          {
+            "label": "No — Asystole / PEA",
+            "sub": "Nonshockable",
+            "to": "asystole",
+            "log": "Rhythm: asystole/PEA (nonshockable)",
+            "tone": "neutral"
+          }
+        ],
+        "detail": "Pause compressions < 10 seconds for the rhythm check. VF = chaotic fibrillation, no organized QRS. pVT = organized wide-complex tachycardia without a pulse. PEA = organized rhythm without a pulse. If in doubt between fine VF and asystole, resume CPR — do not delay compressions.",
+        "map": {
+          "col": 0,
+          "row": 1,
+          "span": 2
+        }
+      },
+      "vf": {
+        "id": "vf",
+        "kind": "action",
+        "num": 2,
+        "title": "VF / pVT",
+        "bullets": [
+          [
+            "Shockable rhythm confirmed — charge the defibrillator while CPR continues"
+          ]
+        ],
+        "primaryLabel": "Continue to shock",
+        "next": "shock1",
+        "map": {
+          "col": 0,
+          "row": 2
+        }
+      },
+      "shock1": {
+        "id": "shock1",
+        "kind": "action",
+        "num": 3,
+        "title": "Shock",
+        "bullets": [
+          [
+            {
+              "b": "Biphasic:"
+            },
+            " manufacturer recommendation (120–200 J); if unknown, use maximum available"
+          ],
+          [
+            {
+              "b": "Monophasic:"
+            },
+            " 360 J"
+          ],
+          [
+            "Resume CPR immediately after the shock — do not pause for a rhythm check"
+          ]
+        ],
+        "detail": "Charge during compressions, clear only to deliver. Second and subsequent doses should be equivalent or higher. Restart compressions the moment the shock is delivered.",
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr4",
+        "map": {
+          "col": 0,
+          "row": 3
+        }
+      },
+      "cpr4": {
+        "id": "cpr4",
+        "kind": "loop",
+        "num": 4,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "IV/IO access"
+            }
+          ],
+          [
+            "High-quality compressions — rotate compressor"
+          ]
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm2",
+        "map": {
+          "col": 0,
+          "row": 4
+        }
+      },
+      "rhythm2": {
+        "id": "rhythm2",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — still VF/pVT",
+            "sub": "Shock again",
+            "to": "shock5",
+            "log": "Rhythm: shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Check for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 5
+        }
+      },
+      "shock5": {
+        "id": "shock5",
+        "kind": "action",
+        "num": 5,
+        "title": "Shock",
+        "bullets": [
+          [
+            "Equivalent or higher energy than the previous shock"
+          ]
+        ],
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr6",
+        "map": {
+          "col": 0,
+          "row": 6
+        }
+      },
+      "cpr6": {
+        "id": "cpr6",
+        "kind": "loop",
+        "num": 6,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "Epinephrine every 3–5 min"
+            }
+          ],
+          [
+            "Consider advanced airway, waveform capnography"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "1 mg IV/IO — repeat every 3–5 min",
+            "counter": "epi",
+            "detail": "1 mg (10 mL of 0.1 mg/mL) IV/IO push, flush with 20 mL. Repeat every 3–5 minutes. For nonshockable rhythms give as soon as feasible — earlier epinephrine in asystole/PEA is associated with improved ROSC and survival. Follow each peripheral dose with a fluid flush and elevate the limb."
+          }
+        ],
+        "detail": "With an advanced airway: continuous compressions + 1 breath every 6 seconds (10/min). Waveform capnography confirms tube placement and tracks CPR quality — if ETCO₂ is low or falling, improve compressions.",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm3",
+        "map": {
+          "col": 0,
+          "row": 7
+        }
+      },
+      "rhythm3": {
+        "id": "rhythm3",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — still VF/pVT",
+            "sub": "Shock again",
+            "to": "shock7",
+            "log": "Rhythm: shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Check for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 8
+        }
+      },
+      "shock7": {
+        "id": "shock7",
+        "kind": "action",
+        "num": 7,
+        "title": "Shock",
+        "bullets": [
+          [
+            "Refractory VF/pVT — consider changing pad vector; DSED may be considered where two defibrillators are available"
+          ]
+        ],
+        "detail": "2025 guidance: for VF refractory to standard defibrillation, a change in pad orientation (anterior-posterior) or double sequential external defibrillation (DSED) may be considered.",
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr8",
+        "map": {
+          "col": 0,
+          "row": 9
+        }
+      },
+      "cpr8": {
+        "id": "cpr8",
+        "kind": "loop",
+        "num": 8,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "Amiodarone"
+            },
+            " or ",
+            {
+              "b": "lidocaine"
+            }
+          ],
+          [
+            "Treat reversible causes — H's & T's"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Amiodarone",
+            "dose": "300 mg IV/IO bolus → 2nd dose 150 mg",
+            "counter": "amio",
+            "detail": "First dose 300 mg IV/IO bolus (diluted in 20–30 mL D5W). Second dose 150 mg after 3–5 min if VF/pVT persists. For shock-refractory VF/pVT after the 3rd shock. Do not combine with lidocaine — choose one agent."
+          },
+          {
+            "name": "Lidocaine",
+            "dose": "1–1.5 mg/kg → 2nd dose 0.5–0.75 mg/kg",
+            "counter": "lido",
+            "detail": "First dose 1–1.5 mg/kg IV/IO. Second dose 0.5–0.75 mg/kg after 5–10 min (maximum cumulative 3 mg/kg). Alternative to amiodarone for shock-refractory VF/pVT."
+          },
+          {
+            "name": "Magnesium",
+            "dose": "1–2 g IV/IO (torsades)",
+            "counter": "mag",
+            "detail": "1–2 g IV/IO diluted in 10 mL D5W over 5–20 min — only for torsades de pointes with prolonged QT. Not recommended routinely in cardiac arrest."
+          },
+          {
+            "name": "Epinephrine",
+            "dose": "1 mg IV/IO — repeat every 3–5 min",
+            "counter": "epi",
+            "detail": "1 mg (10 mL of 0.1 mg/mL) IV/IO push, flush with 20 mL. Repeat every 3–5 minutes. For nonshockable rhythms give as soon as feasible — earlier epinephrine in asystole/PEA is associated with improved ROSC and survival. Follow each peripheral dose with a fluid flush and elevate the limb."
+          }
+        ],
+        "detail": "Antiarrhythmic for shock-refractory VF/pVT (typically after the 3rd shock). Keep epinephrine on its 3–5 min schedule. Actively work the H's & T's checklist — open the Causes panel and mark what you have excluded.",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm2",
+        "map": {
+          "col": 0,
+          "row": 10
+        },
+        "goto": {
+          "label": "Loops to rhythm check → 5",
+          "to": "rhythm2"
+        }
+      },
+      "asystole": {
+        "id": "asystole",
+        "kind": "action",
+        "num": 9,
+        "title": "Asystole / PEA",
+        "bullets": [
+          [
+            {
+              "b": "Epinephrine ASAP"
+            },
+            " — as soon as feasible"
+          ],
+          [
+            "Confirm asystole in more than one lead; check gain and connections"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "1 mg IV/IO — repeat every 3–5 min",
+            "counter": "epi",
+            "detail": "1 mg (10 mL of 0.1 mg/mL) IV/IO push, flush with 20 mL. Repeat every 3–5 minutes. For nonshockable rhythms give as soon as feasible — earlier epinephrine in asystole/PEA is associated with improved ROSC and survival. Follow each peripheral dose with a fluid flush and elevate the limb."
+          }
+        ],
+        "detail": "Early epinephrine in nonshockable arrest improves ROSC and survival — do not wait for the next cycle boundary. True asystole must be distinguished from fine VF and lead disconnection.",
+        "primaryLabel": "Continue — CPR 2 min",
+        "next": "cpr10",
+        "map": {
+          "col": 1,
+          "row": 2
+        }
+      },
+      "cpr10": {
+        "id": "cpr10",
+        "kind": "loop",
+        "num": 10,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "IV/IO access"
+            }
+          ],
+          [
+            {
+              "b": "Epinephrine every 3–5 min"
+            }
+          ],
+          [
+            "Consider advanced airway, capnography"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "1 mg IV/IO — repeat every 3–5 min",
+            "counter": "epi",
+            "detail": "1 mg (10 mL of 0.1 mg/mL) IV/IO push, flush with 20 mL. Repeat every 3–5 minutes. For nonshockable rhythms give as soon as feasible — earlier epinephrine in asystole/PEA is associated with improved ROSC and survival. Follow each peripheral dose with a fluid flush and elevate the limb."
+          }
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm10",
+        "map": {
+          "col": 1,
+          "row": 3,
+          "span": 2
+        }
+      },
+      "rhythm10": {
+        "id": "rhythm10",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — now shockable",
+            "sub": "Go to shock",
+            "to": "shock5",
+            "log": "Rhythm: converted to shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "to": "cpr11",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 1,
+          "row": 5
+        },
+        "goto": {
+          "label": "Yes → Go to 5",
+          "to": "shock5"
+        }
+      },
+      "cpr11": {
+        "id": "cpr11",
+        "kind": "loop",
+        "num": 11,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            "Treat reversible causes — H's & T's"
+          ],
+          [
+            "Continue epinephrine every 3–5 min"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "1 mg IV/IO — repeat every 3–5 min",
+            "counter": "epi",
+            "detail": "1 mg (10 mL of 0.1 mg/mL) IV/IO push, flush with 20 mL. Repeat every 3–5 minutes. For nonshockable rhythms give as soon as feasible — earlier epinephrine in asystole/PEA is associated with improved ROSC and survival. Follow each peripheral dose with a fluid flush and elevate the limb."
+          }
+        ],
+        "detail": "PEA is a 'why' rhythm — survival depends on finding the cause. Narrow-complex PEA suggests a mechanical cause (tamponade, tension pneumothorax, PE, hypovolemia); wide-complex suggests metabolic (hyperkalemia, toxins).",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm11",
+        "map": {
+          "col": 1,
+          "row": 6
+        }
+      },
+      "rhythm11": {
+        "id": "rhythm11",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — now shockable",
+            "sub": "Go to shock",
+            "to": "shock5",
+            "log": "Rhythm: converted to shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Assess for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 1,
+          "row": 7
+        },
+        "goto": {
+          "label": "Yes → Go to 5 or 7",
+          "to": "shock5"
+        }
+      },
+      "rosc-check": {
+        "id": "rosc-check",
+        "kind": "decision",
+        "num": 12,
+        "title": "ROSC assessment",
+        "question": "Signs of return of spontaneous circulation?",
+        "bullets": [
+          [
+            "Pulse and blood pressure"
+          ],
+          [
+            "Abrupt sustained rise in ETCO₂ (typically ≥ 40 mm Hg)"
+          ],
+          [
+            "Spontaneous arterial waveform on intra-arterial monitoring"
+          ]
+        ],
+        "choices": [
+          {
+            "label": "ROSC achieved",
+            "sub": "→ Post-Cardiac Arrest Care",
+            "to": "rosc",
+            "log": "ROSC achieved",
+            "tone": "safe"
+          },
+          {
+            "label": "No ROSC — continue",
+            "sub": "Back to CPR (step 10)",
+            "to": "cpr10",
+            "log": "No ROSC — resuscitation continues",
+            "tone": "neutral"
+          }
+        ],
+        "detail": "If no ROSC: continue cycles and consider the appropriateness of continued resuscitation — team consensus, downtime, ETCO₂ persistently < 10 mm Hg after 20 min of good CPR, and reversible-cause status all inform the decision. Consider ECPR (extracorporeal CPR) in selected patients with a reversible cause where a program exists.",
+        "map": {
+          "col": 0,
+          "row": 11,
+          "span": 2
+        }
+      },
+      "rosc": {
+        "id": "rosc",
+        "kind": "outcome",
+        "title": "Post-Cardiac Arrest Care",
+        "bullets": [
+          [
+            "Manage airway; SpO₂ 90–98% (PaO₂ 60–105), PaCO₂ 35–45 mm Hg"
+          ],
+          [
+            "Maintain MAP ≥ 65 mm Hg — vasopressors and/or fluids"
+          ],
+          [
+            "12-lead ECG — emergent cath if STEMI"
+          ],
+          [
+            "Temperature control; EEG if not following commands"
+          ]
+        ],
+        "detail": "Open the Post-Cardiac Arrest Care algorithm for the full walkthrough.",
+        "map": {
+          "col": 0,
+          "row": 12,
+          "span": 2
+        }
+      }
+    }
+  },
+  {
+    "id": "pediatric-cardiac-arrest",
+    "title": "Pediatric Cardiac Arrest",
+    "short": "Peds Arrest",
+    "guideline": "AHA/AAP Guidelines 2025 · PALS",
+    "codeMode": true,
+    "entry": "start",
+    "accent": "#F472B6",
+    "icon": "child_care",
+    "blurb": "Weight-based dosing · 2→4 J/kg shocks · 15:2 ratios — set patient weight for computed doses",
+    "mapCols": [
+      "Shockable — VF/pVT",
+      "Nonshockable — Asystole/PEA"
+    ],
+    "nodes": {
+      "start": {
+        "id": "start",
+        "kind": "action",
+        "num": 1,
+        "title": "Start CPR",
+        "bullets": [
+          [
+            {
+              "b": "Push hard and fast"
+            },
+            " — ≥ ⅓ AP chest diameter at 100–120/min"
+          ],
+          [
+            "Begin bag-mask ventilation and give oxygen"
+          ],
+          [
+            "Attach monitor / defibrillator"
+          ]
+        ],
+        "detail": "Compression-ventilation ratios: 15:2 with 2 rescuers (prepuberty); 30:2 with 2 rescuers (postpuberty onset); 30:2 with 1 rescuer at any age. Full recoil, rotate compressor every 2 minutes. Monitor ETCO₂ and, when available, invasive diastolic BP.",
+        "primaryLabel": "CPR started — check rhythm",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "next": "rhythm1",
+        "map": {
+          "col": 0,
+          "row": 0,
+          "span": 2
+        }
+      },
+      "rhythm1": {
+        "id": "rhythm1",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — VF / pVT",
+            "sub": "Shockable",
+            "to": "vf",
+            "log": "Rhythm: VF/pVT (shockable)",
+            "tone": "danger"
+          },
+          {
+            "label": "No — Asystole / PEA",
+            "sub": "Nonshockable",
+            "to": "asystole",
+            "log": "Rhythm: asystole/PEA (nonshockable)",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 1,
+          "span": 2
+        }
+      },
+      "vf": {
+        "id": "vf",
+        "kind": "action",
+        "num": 2,
+        "title": "VF / pVT",
+        "bullets": [
+          [
+            "Shockable rhythm confirmed — charge the defibrillator while CPR continues"
+          ]
+        ],
+        "primaryLabel": "Continue to shock",
+        "next": "shock1",
+        "map": {
+          "col": 0,
+          "row": 2
+        }
+      },
+      "shock1": {
+        "id": "shock1",
+        "kind": "action",
+        "num": 3,
+        "title": "Shock ASAP",
+        "bullets": [
+          [
+            {
+              "b": "First shock: 2 J/kg"
+            }
+          ],
+          [
+            "Resume CPR immediately after the shock"
+          ]
+        ],
+        "detail": "Energy sequence: first shock 2 J/kg, second 4 J/kg, subsequent ≥ 4 J/kg to a maximum of 10 J/kg or the adult dose.",
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr4",
+        "map": {
+          "col": 0,
+          "row": 3
+        }
+      },
+      "cpr4": {
+        "id": "cpr4",
+        "kind": "loop",
+        "num": 4,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "IV/IO access"
+            }
+          ],
+          [
+            "High-quality compressions — rotate compressor"
+          ]
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm2",
+        "map": {
+          "col": 0,
+          "row": 4
+        }
+      },
+      "rhythm2": {
+        "id": "rhythm2",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — still VF/pVT",
+            "sub": "Shock again",
+            "to": "shock5",
+            "log": "Rhythm: shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Check for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 5
+        }
+      },
+      "shock5": {
+        "id": "shock5",
+        "kind": "action",
+        "num": 5,
+        "title": "Shock ASAP",
+        "bullets": [
+          [
+            {
+              "b": "Second shock: 4 J/kg"
+            }
+          ]
+        ],
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr6",
+        "map": {
+          "col": 0,
+          "row": 6
+        }
+      },
+      "cpr6": {
+        "id": "cpr6",
+        "kind": "loop",
+        "num": 6,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "Epinephrine 0.01 mg/kg every 3–5 min"
+            },
+            " (max 1 mg)"
+          ],
+          [
+            "Consider advanced airway and capnography"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "0.01 mg/kg IV/IO (max 1 mg) — every 3–5 min",
+            "counter": "epi",
+            "detail": "0.01 mg/kg (0.1 mg/mL concentration) IV/IO, maximum single dose 1 mg. Repeat every 3–5 minutes. Set the patient weight to see the computed dose.",
+            "dosePerKg": 0.01,
+            "doseMaxMg": 1
+          }
+        ],
+        "detail": "With an advanced airway in place: continuous compressions and give a breath every 2–3 seconds (20–30 breaths/min).",
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm3",
+        "map": {
+          "col": 0,
+          "row": 7
+        }
+      },
+      "rhythm3": {
+        "id": "rhythm3",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — still VF/pVT",
+            "sub": "Shock again",
+            "to": "shock7",
+            "log": "Rhythm: shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Check for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 8
+        }
+      },
+      "shock7": {
+        "id": "shock7",
+        "kind": "action",
+        "num": 7,
+        "title": "Shock ASAP",
+        "bullets": [
+          [
+            {
+              "b": "Subsequent shocks: ≥ 4 J/kg"
+            },
+            " — maximum 10 J/kg or adult dose"
+          ]
+        ],
+        "primaryLabel": "⚡ Shock delivered",
+        "primaryEvent": "shock",
+        "next": "cpr8",
+        "map": {
+          "col": 0,
+          "row": 9
+        }
+      },
+      "cpr8": {
+        "id": "cpr8",
+        "kind": "loop",
+        "num": 8,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "Amiodarone"
+            },
+            " or ",
+            {
+              "b": "lidocaine"
+            }
+          ],
+          [
+            "Treat reversible causes — H's & T's (incl. hypoglycemia)"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Amiodarone",
+            "dose": "5 mg/kg IV/IO bolus (max 300 mg)",
+            "counter": "amio",
+            "detail": "5 mg/kg bolus (max 300 mg). May repeat up to 3 total doses (max 150 mg subsequent) for refractory VF/pVT. Amiodarone OR lidocaine — not both.",
+            "dosePerKg": 5,
+            "doseMaxMg": 300
+          },
+          {
+            "name": "Lidocaine",
+            "dose": "1 mg/kg IV/IO",
+            "counter": "lido",
+            "detail": "1 mg/kg IV/IO bolus. Alternative to amiodarone for shock-refractory VF/pVT.",
+            "dosePerKg": 1
+          },
+          {
+            "name": "Epinephrine",
+            "dose": "0.01 mg/kg IV/IO (max 1 mg) — every 3–5 min",
+            "counter": "epi",
+            "detail": "0.01 mg/kg (0.1 mg/mL concentration) IV/IO, maximum single dose 1 mg. Repeat every 3–5 minutes. Set the patient weight to see the computed dose.",
+            "dosePerKg": 0.01,
+            "doseMaxMg": 1
+          }
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm2",
+        "map": {
+          "col": 0,
+          "row": 10
+        },
+        "goto": {
+          "label": "Loops to rhythm check → 5",
+          "to": "rhythm2"
+        }
+      },
+      "asystole": {
+        "id": "asystole",
+        "kind": "action",
+        "num": 9,
+        "title": "Asystole / PEA",
+        "bullets": [
+          [
+            {
+              "b": "Epinephrine ASAP"
+            },
+            " — 0.01 mg/kg (max 1 mg)"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "0.01 mg/kg IV/IO (max 1 mg) — every 3–5 min",
+            "counter": "epi",
+            "detail": "0.01 mg/kg (0.1 mg/mL concentration) IV/IO, maximum single dose 1 mg. Repeat every 3–5 minutes. Set the patient weight to see the computed dose.",
+            "dosePerKg": 0.01,
+            "doseMaxMg": 1
+          }
+        ],
+        "primaryLabel": "Continue — CPR 2 min",
+        "next": "cpr10",
+        "map": {
+          "col": 1,
+          "row": 2
+        }
+      },
+      "cpr10": {
+        "id": "cpr10",
+        "kind": "loop",
+        "num": 10,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            {
+              "b": "IV/IO access"
+            }
+          ],
+          [
+            {
+              "b": "Epinephrine every 3–5 min"
+            },
+            " — 0.01 mg/kg (max 1 mg)"
+          ],
+          [
+            "Consider advanced airway and capnography"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "0.01 mg/kg IV/IO (max 1 mg) — every 3–5 min",
+            "counter": "epi",
+            "detail": "0.01 mg/kg (0.1 mg/mL concentration) IV/IO, maximum single dose 1 mg. Repeat every 3–5 minutes. Set the patient weight to see the computed dose.",
+            "dosePerKg": 0.01,
+            "doseMaxMg": 1
+          }
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm10",
+        "map": {
+          "col": 1,
+          "row": 3,
+          "span": 2
+        }
+      },
+      "rhythm10": {
+        "id": "rhythm10",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — now shockable",
+            "sub": "Go to shock",
+            "to": "shock5",
+            "log": "Rhythm: converted to shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "to": "cpr11",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 1,
+          "row": 5
+        },
+        "goto": {
+          "label": "Yes → Go to 5",
+          "to": "shock5"
+        }
+      },
+      "cpr11": {
+        "id": "cpr11",
+        "kind": "loop",
+        "num": 11,
+        "title": "CPR 2 min",
+        "bullets": [
+          [
+            "Treat reversible causes — H's & T's (incl. hypoglycemia)"
+          ],
+          [
+            "Continue epinephrine every 3–5 min"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Epinephrine",
+            "dose": "0.01 mg/kg IV/IO (max 1 mg) — every 3–5 min",
+            "counter": "epi",
+            "detail": "0.01 mg/kg (0.1 mg/mL concentration) IV/IO, maximum single dose 1 mg. Repeat every 3–5 minutes. Set the patient weight to see the computed dose.",
+            "dosePerKg": 0.01,
+            "doseMaxMg": 1
+          }
+        ],
+        "onEnter": [
+          {
+            "type": "startCprCycle"
+          }
+        ],
+        "primaryLabel": "2 min done — rhythm check",
+        "next": "rhythm11",
+        "map": {
+          "col": 1,
+          "row": 6
+        }
+      },
+      "rhythm11": {
+        "id": "rhythm11",
+        "kind": "decision",
+        "title": "Rhythm check",
+        "question": "Is the rhythm shockable?",
+        "choices": [
+          {
+            "label": "Yes — now shockable",
+            "sub": "Go to shock",
+            "to": "shock5",
+            "log": "Rhythm: converted to shockable",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Assess for ROSC",
+            "to": "rosc-check",
+            "log": "Rhythm: nonshockable",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 1,
+          "row": 7
+        },
+        "goto": {
+          "label": "Yes → Go to 5",
+          "to": "shock5"
+        }
+      },
+      "rosc-check": {
+        "id": "rosc-check",
+        "kind": "decision",
+        "num": 12,
+        "title": "ROSC assessment",
+        "question": "Signs of return of spontaneous circulation?",
+        "bullets": [
+          [
+            "Pulse and blood pressure"
+          ],
+          [
+            "Abrupt sustained rise in ETCO₂"
+          ]
+        ],
+        "choices": [
+          {
+            "label": "ROSC achieved",
+            "sub": "→ Post–cardiac arrest care",
+            "to": "rosc",
+            "log": "ROSC achieved",
+            "tone": "safe"
+          },
+          {
+            "label": "No ROSC — continue",
+            "sub": "Back to CPR (step 10)",
+            "to": "cpr10",
+            "log": "No ROSC — resuscitation continues",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 11,
+          "span": 2
+        }
+      },
+      "rosc": {
+        "id": "rosc",
+        "kind": "outcome",
+        "title": "Post–Cardiac Arrest Care",
+        "bullets": [
+          [
+            "Follow the post–cardiac arrest care checklist"
+          ],
+          [
+            "Manage airway, oxygenation, ventilation, and hemodynamics for age"
+          ],
+          [
+            "Treat the precipitating cause; PICU admission"
+          ]
+        ],
+        "map": {
+          "col": 0,
+          "row": 12,
+          "span": 2
+        }
+      }
+    }
+  },
+  {
+    "id": "bradycardia",
+    "title": "Adult Bradycardia With a Pulse",
+    "short": "Bradycardia",
+    "guideline": "AHA Guidelines 2025 · Adult ACLS",
+    "codeMode": false,
+    "entry": "b1",
+    "accent": "#6366F1",
+    "icon": "monitor_heart",
+    "blurb": "HR < 50 with a pulse — atropine, pacing, chronotropic infusions",
+    "nodes": {
+      "b1": {
+        "id": "b1",
+        "kind": "action",
+        "num": 1,
+        "title": "Recognize bradycardia",
+        "bullets": [
+          [
+            {
+              "b": "HR typically < 50/min"
+            },
+            " if bradyarrhythmia"
+          ],
+          [
+            "Assess appropriateness for the clinical condition"
+          ]
+        ],
+        "detail": "Common causes: myocardial ischemia/infarction; drugs/toxicologic (calcium-channel blockers, β-blockers, digoxin); hypoxia; electrolyte abnormality (e.g. hyperkalemia). Treat the cause in parallel with the rhythm.",
+        "primaryLabel": "Assessed — check for compromise",
+        "next": "b2",
+        "map": {
+          "col": 0,
+          "row": 0
+        }
+      },
+      "b2": {
+        "id": "b2",
+        "kind": "decision",
+        "title": "Cardiopulmonary compromise?",
+        "question": "Bradyarrhythmia causing any of: hypotension · acutely altered mental status · signs of shock · ischemic chest discomfort · acute heart failure?",
+        "choices": [
+          {
+            "label": "No",
+            "sub": "Identify causes · observe",
+            "to": "b3",
+            "log": "Bradycardia: no cardiopulmonary compromise",
+            "tone": "safe"
+          },
+          {
+            "label": "Yes — compromise",
+            "sub": "Assessment and support",
+            "to": "b4",
+            "log": "Bradycardia: cardiopulmonary compromise",
+            "tone": "danger"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 1
+        }
+      },
+      "b3": {
+        "id": "b3",
+        "kind": "outcome",
+        "title": "Identify causes · observe",
+        "bullets": [
+          [
+            "Identify and treat underlying causes"
+          ],
+          [
+            "Support ABCs · consider oxygen"
+          ],
+          [
+            "Obtain 12-lead ECG"
+          ],
+          [
+            "Observe — reassess if symptoms develop"
+          ]
+        ],
+        "detail": "Common causes: myocardial ischemia/infarction; drugs (CCB, β-blocker, digoxin); hypoxia; electrolyte abnormality (e.g. hyperkalemia).",
+        "map": {
+          "col": 1,
+          "row": 1
+        }
+      },
+      "b4": {
+        "id": "b4",
+        "kind": "action",
+        "num": 2,
+        "title": "Assessment and support",
+        "bullets": [
+          [
+            "Maintain patent airway and provide oxygen"
+          ],
+          [
+            "Assist breathing with positive-pressure ventilation as necessary"
+          ],
+          [
+            "Attach cardiorespiratory monitor · monitor pulse"
+          ],
+          [
+            "IV access · 12-lead ECG if it does not delay therapy"
+          ]
+        ],
+        "primaryLabel": "Supported — does it persist?",
+        "next": "b5",
+        "map": {
+          "col": 0,
+          "row": 2
+        }
+      },
+      "b5": {
+        "id": "b5",
+        "kind": "decision",
+        "title": "Persistence check",
+        "question": "Does bradycardia persist with cardiopulmonary compromise?",
+        "choices": [
+          {
+            "label": "No — improved",
+            "sub": "Identify causes · observe",
+            "to": "b3",
+            "log": "Bradycardia improved — observation",
+            "tone": "safe"
+          },
+          {
+            "label": "Yes — persists",
+            "sub": "Atropine",
+            "to": "b6",
+            "log": "Bradycardia persists with compromise",
+            "tone": "danger"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 3
+        }
+      },
+      "b6": {
+        "id": "b6",
+        "kind": "action",
+        "num": 3,
+        "title": "Atropine → pacing / infusion",
+        "bullets": [
+          [
+            {
+              "b": "Atropine 1 mg IV bolus"
+            },
+            " — repeat every 3–5 min · maximum 3 mg"
+          ],
+          [
+            "If atropine ineffective:"
+          ],
+          [
+            {
+              "b": "Transcutaneous pacing"
+            },
+            " — and/or"
+          ],
+          [
+            {
+              "b": "Dopamine"
+            },
+            " 5–20 mcg/kg/min — or ",
+            {
+              "b": "epinephrine"
+            },
+            " 2–10 mcg/min"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Atropine",
+            "dose": "1 mg IV — repeat q3–5 min, max 3 mg",
+            "counter": "atropine",
+            "detail": "1 mg IV bolus, may repeat every 3–5 minutes to a maximum total of 3 mg. Likely ineffective in high-grade (Mobitz II / third-degree) block with wide QRS — move to pacing/chronotropes early. Avoid relying on atropine in cardiac transplant patients (denervated heart)."
+          },
+          {
+            "name": "Dopamine gtt",
+            "dose": "5–20 mcg/kg/min, titrate",
+            "detail": "Infusion 5–20 mcg/kg/min IV; titrate to heart rate and blood pressure. Taper slowly."
+          },
+          {
+            "name": "Epinephrine gtt",
+            "dose": "2–10 mcg/min, titrate",
+            "detail": "Infusion 2–10 mcg/min IV; titrate to patient response. Bridge to pacing when available."
+          }
+        ],
+        "detail": "Do not delay pacing for atropine in high-grade AV block (Mobitz II / third-degree, wide QRS) — atropine is unlikely to work at or below the His bundle. For TCP: confirm electrical AND mechanical capture (femoral pulse), set rate ~60–80/min and output 10–20 mA above capture threshold; sedate/analgese the conscious patient.",
+        "primaryLabel": "Treatment started",
+        "next": "b7",
+        "map": {
+          "col": 0,
+          "row": 4
+        }
+      },
+      "b7": {
+        "id": "b7",
+        "kind": "outcome",
+        "title": "Consider",
+        "bullets": [
+          [
+            "Expert consultation (cardiology)"
+          ],
+          [
+            "Transvenous pacing"
+          ],
+          [
+            "If arrest develops — switch to the Cardiac Arrest algorithm"
+          ]
+        ],
+        "map": {
+          "col": 0,
+          "row": 5
+        }
+      }
+    }
+  },
+  {
+    "id": "tachycardia",
+    "title": "Adult Tachyarrhythmia With a Pulse",
+    "short": "Tachycardia",
+    "guideline": "AHA Guidelines 2025 · Adult ACLS",
+    "codeMode": false,
+    "entry": "t1",
+    "accent": "#F59E0B",
+    "icon": "cardiology",
+    "blurb": "HR ≥ 150 with a pulse — cardioversion, adenosine, antiarrhythmics",
+    "nodes": {
+      "t1": {
+        "id": "t1",
+        "kind": "action",
+        "num": 1,
+        "title": "Assess & support",
+        "bullets": [
+          [
+            {
+              "b": "HR typically ≥ 150/min"
+            },
+            " if tachyarrhythmia"
+          ],
+          [
+            "Assess appropriateness for clinical condition — rule out sinus tachycardia from fever, pain, hypovolemia, sepsis"
+          ],
+          [
+            "Maintain airway; oxygen if hypoxemic"
+          ],
+          [
+            "Cardiac monitor · blood pressure · oximetry · IV access"
+          ],
+          [
+            "12-lead ECG if available — don't delay cardioversion if unstable"
+          ]
+        ],
+        "primaryLabel": "Assessed — evaluate stability",
+        "next": "t2",
+        "map": {
+          "col": 0,
+          "row": 0
+        }
+      },
+      "t2": {
+        "id": "t2",
+        "kind": "decision",
+        "title": "Stability check",
+        "question": "Persistent tachyarrhythmia causing any of: hypotension · acutely altered mental status · signs of shock · ischemic chest discomfort · acute heart failure?",
+        "choices": [
+          {
+            "label": "Yes — unstable",
+            "sub": "Synchronized cardioversion",
+            "to": "t3",
+            "log": "Tachycardia: unstable",
+            "tone": "danger"
+          },
+          {
+            "label": "No — stable",
+            "sub": "Assess QRS width",
+            "to": "t4",
+            "log": "Tachycardia: stable",
+            "tone": "safe"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 1
+        }
+      },
+      "t3": {
+        "id": "t3",
+        "kind": "action",
+        "num": 2,
+        "title": "Synchronized cardioversion",
+        "bullets": [
+          [
+            {
+              "b": "Sedate whenever feasible"
+            },
+            " — but do not delay cardioversion in decompensation"
+          ],
+          [
+            {
+              "b": "Energy:"
+            },
+            " use the device's recommended level to maximize first-shock success; if unknown, use maximum available (2025)"
+          ],
+          [
+            "If regular narrow complex, consider adenosine while preparing"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Adenosine",
+            "dose": "6 mg rapid IV push → 12 mg",
+            "counter": "adenosine",
+            "detail": "First dose 6 mg rapid IV push via large (antecubital) vein followed by immediate 20 mL NS flush; second dose 12 mg if required. Use only for regular rhythms (narrow, or wide AND regular + monomorphic). Warn the patient about transient chest pressure / impending-doom sensation."
+          }
+        ],
+        "detail": "Press SYNC before every shock (it resets after each delivery on most devices). If the device won't sync on a very fast polymorphic rhythm, treat as VF with an unsynchronized high-energy shock. If cardioversion fails, increase energy stepwise and consider an antiarrhythmic infusion and expert consultation. Classic initial energies: narrow regular 50–100 J · narrow irregular 120–200 J biphasic · wide regular 100 J · wide irregular — defibrillation dose (unsynchronized).",
+        "primaryLabel": "Cardioversion delivered",
+        "next": "t7",
+        "map": {
+          "col": 1,
+          "row": 1
+        }
+      },
+      "t4": {
+        "id": "t4",
+        "kind": "decision",
+        "title": "QRS width",
+        "question": "Is the QRS wide — ≥ 0.12 second?",
+        "choices": [
+          {
+            "label": "Yes — wide QRS",
+            "sub": "VT until proven otherwise",
+            "to": "t5",
+            "log": "Wide-complex tachycardia",
+            "tone": "danger"
+          },
+          {
+            "label": "No — narrow QRS",
+            "sub": "SVT pathway",
+            "to": "t6",
+            "log": "Narrow-complex tachycardia",
+            "tone": "neutral"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 2
+        }
+      },
+      "t5": {
+        "id": "t5",
+        "kind": "action",
+        "num": 3,
+        "title": "Stable wide-QRS",
+        "bullets": [
+          [
+            "Consider ",
+            {
+              "b": "adenosine"
+            },
+            " only if regular AND monomorphic"
+          ],
+          [
+            "Consider ",
+            {
+              "b": "antiarrhythmic infusion"
+            }
+          ],
+          [
+            "Consider ",
+            {
+              "b": "expert consultation"
+            }
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Adenosine",
+            "dose": "6 mg rapid IV push → 12 mg",
+            "counter": "adenosine",
+            "detail": "First dose 6 mg rapid IV push via large (antecubital) vein followed by immediate 20 mL NS flush; second dose 12 mg if required. Use only for regular rhythms (narrow, or wide AND regular + monomorphic). Warn the patient about transient chest pressure / impending-doom sensation."
+          },
+          {
+            "name": "Procainamide gtt",
+            "dose": "20–50 mg/min · max 17 mg/kg",
+            "detail": "20–50 mg/min until arrhythmia suppressed, hypotension, QRS widens > 50%, or max 17 mg/kg. Maintenance 1–4 mg/min. Avoid in prolonged QT or CHF."
+          },
+          {
+            "name": "Amiodarone gtt",
+            "dose": "150 mg over 10 min",
+            "detail": "First dose 150 mg over 10 minutes; repeat as needed if VT recurs. Maintenance 1 mg/min for the first 6 hours."
+          }
+        ],
+        "detail": "Treat undifferentiated regular wide-complex tachycardia as VT. Never give AV-nodal blockers (verapamil/diltiazem/β-blockers) to a wide, irregular, very fast rhythm — pre-excited AF can degenerate to VF.",
+        "primaryLabel": "Therapy chosen",
+        "next": "t7",
+        "map": {
+          "col": 0,
+          "row": 3
+        }
+      },
+      "t6": {
+        "id": "t6",
+        "kind": "action",
+        "num": 4,
+        "title": "Stable narrow-QRS",
+        "bullets": [
+          [
+            {
+              "b": "Vagal maneuvers"
+            },
+            " — modified Valsalva ~40 mm Hg 15 s with leg raise"
+          ],
+          [
+            {
+              "b": "Adenosine"
+            },
+            " if regular — 6 mg → 12 mg rapid push"
+          ],
+          [
+            {
+              "b": "β-blocker or calcium-channel blocker"
+            }
+          ],
+          [
+            "Consider expert consultation"
+          ]
+        ],
+        "meds": [
+          {
+            "name": "Adenosine",
+            "dose": "6 mg rapid IV push → 12 mg",
+            "counter": "adenosine",
+            "detail": "First dose 6 mg rapid IV push via large (antecubital) vein followed by immediate 20 mL NS flush; second dose 12 mg if required. Use only for regular rhythms (narrow, or wide AND regular + monomorphic). Warn the patient about transient chest pressure / impending-doom sensation."
+          },
+          {
+            "name": "Diltiazem",
+            "dose": "15–20 mg (0.25 mg/kg) IV over 2 min",
+            "detail": "0.25 mg/kg IV over 2 min; may repeat 0.35 mg/kg after 15 min. Then 5–15 mg/h infusion. Avoid in hypotension or reduced EF."
+          },
+          {
+            "name": "Metoprolol",
+            "dose": "5 mg IV q5 min × 3",
+            "detail": "5 mg slow IV push over 1–2 min, repeat every 5 minutes to a total of 15 mg as tolerated."
+          }
+        ],
+        "detail": "Adenosine both converts AVNRT/AVRT and unmasks atrial flutter. Record a continuous rhythm strip during administration. For AF/flutter, the goal is rate control (CCB/β-blocker) — cardioversion decisions depend on anticoagulation status and duration.",
+        "primaryLabel": "Therapy chosen",
+        "next": "t7",
+        "map": {
+          "col": 0,
+          "row": 4
+        }
+      },
+      "t7": {
+        "id": "t7",
+        "kind": "outcome",
+        "title": "Reassess",
+        "bullets": [
+          [
+            "Reassess rhythm, perfusion, and symptoms after each intervention"
+          ],
+          [
+            "If the patient becomes unstable — synchronized cardioversion"
+          ],
+          [
+            "If pulse is lost — switch to the Cardiac Arrest algorithm"
+          ],
+          [
+            "If refractory: address underlying cause; increase energy for the next cardioversion; add an antiarrhythmic; expert consultation"
+          ]
+        ],
+        "map": {
+          "col": 0,
+          "row": 5
+        }
+      }
+    }
+  },
+  {
+    "id": "post-arrest",
+    "title": "Adult Post–Cardiac Arrest Care",
+    "short": "Post-Arrest",
+    "guideline": "AHA Guidelines 2025 · Adult ACLS",
+    "codeMode": false,
+    "entry": "p1",
+    "accent": "#10B981",
+    "icon": "respiratory_rate",
+    "blurb": "After ROSC — oxygenation, hemodynamics, cath decisions, temperature control",
+    "nodes": {
+      "p1": {
+        "id": "p1",
+        "kind": "action",
+        "num": 1,
+        "title": "Initial stabilization after ROSC",
+        "bullets": [
+          [
+            {
+              "b": "Manage airway:"
+            },
+            " assess; place or exchange an advanced airway as necessary; confirm placement (waveform capnography)"
+          ],
+          [
+            {
+              "b": "Oxygenation:"
+            },
+            " 100% FiO₂ until SpO₂/PaO₂ can be measured reliably, then titrate to SpO₂ 90–98% (PaO₂ 60–105 mm Hg)"
+          ],
+          [
+            {
+              "b": "Ventilation:"
+            },
+            " target PaCO₂ 35–45 mm Hg (unless severe acidemia)"
+          ],
+          [
+            {
+              "b": "Hemodynamics:"
+            },
+            " target MAP ≥ 65 mm Hg — vasopressors and/or fluid resuscitation"
+          ]
+        ],
+        "detail": "Resuscitation is ongoing during the post-ROSC phase and many of these activities occur concurrently. Even brief hypotension after ROSC worsens neurological outcome — treat aggressively.",
+        "primaryLabel": "Stabilized — early diagnostic testing",
+        "next": "p2",
+        "map": {
+          "col": 0,
+          "row": 0
+        }
+      },
+      "p2": {
+        "id": "p2",
+        "kind": "action",
+        "num": 2,
+        "title": "Early diagnostic testing",
+        "bullets": [
+          [
+            "Obtain a 12-lead ECG — assess for ischemia or arrhythmia"
+          ],
+          [
+            "Consider CT head / chest / abdomen–pelvis for cause of arrest or resuscitation injuries"
+          ],
+          [
+            "Point-of-care ultrasound or echocardiography may identify significant diagnoses"
+          ],
+          [
+            "Labs: ABG, lactate, electrolytes incl. K⁺/Mg²⁺, troponin, glucose"
+          ]
+        ],
+        "primaryLabel": "Testing done — treat etiologies",
+        "next": "p3",
+        "map": {
+          "col": 0,
+          "row": 1
+        }
+      },
+      "p3": {
+        "id": "p3",
+        "kind": "decision",
+        "title": "Emergency cardiac intervention?",
+        "question": "Persistent ST-segment elevation · cardiogenic shock · recurrent/refractory ventricular arrhythmias · severe myocardial ischemia?",
+        "choices": [
+          {
+            "label": "Yes",
+            "sub": "Angiography ± mechanical support",
+            "to": "p4",
+            "log": "Emergency cardiac intervention indicated",
+            "tone": "danger"
+          },
+          {
+            "label": "No",
+            "sub": "Continue management",
+            "to": "p5",
+            "log": "No emergency cardiac intervention indication",
+            "tone": "neutral"
+          }
+        ],
+        "detail": "Treat arrest etiologies and complications. Consider emergency coronary angiography and/or mechanical circulatory support for the indications above.",
+        "map": {
+          "col": 0,
+          "row": 2
+        }
+      },
+      "p4": {
+        "id": "p4",
+        "kind": "action",
+        "title": "Emergency cardiac intervention",
+        "bullets": [
+          [
+            "Activate the cath lab — emergency coronary angiography ± PCI"
+          ],
+          [
+            "Consider mechanical circulatory support"
+          ],
+          [
+            "Continue neuroprotective care in parallel"
+          ]
+        ],
+        "primaryLabel": "Continue to neuro assessment",
+        "next": "p5",
+        "map": {
+          "col": 1,
+          "row": 2
+        }
+      },
+      "p5": {
+        "id": "p5",
+        "kind": "decision",
+        "title": "Neurological assessment",
+        "question": "Off sedation and neuromuscular blockade (if able) — does the patient follow commands?",
+        "choices": [
+          {
+            "label": "No / unsure",
+            "sub": "Temperature control + EEG",
+            "to": "p6",
+            "log": "Not following commands — comatose pathway",
+            "tone": "danger"
+          },
+          {
+            "label": "Yes — follows commands",
+            "sub": "Ongoing critical care",
+            "to": "p7",
+            "log": "Following commands",
+            "tone": "safe"
+          }
+        ],
+        "map": {
+          "col": 0,
+          "row": 3
+        }
+      },
+      "p6": {
+        "id": "p6",
+        "kind": "action",
+        "num": 3,
+        "title": "Comatose pathway",
+        "bullets": [
+          [
+            {
+              "b": "Temperature control:"
+            },
+            " deliberate strategy with goal 32–37.5 °C, started as soon as possible; actively prevent fever"
+          ],
+          [
+            {
+              "b": "EEG:"
+            },
+            " evaluate for clinical seizure; obtain EEG in patients not following commands"
+          ],
+          [
+            "Coronary angiography when appropriate"
+          ],
+          [
+            {
+              "b": "Prognostication:"
+            },
+            " multimodal, appropriately timed — ≥ 72 h from ROSC or achieving normothermia"
+          ]
+        ],
+        "detail": "No single early finding is sufficient for prognosis — use a delayed, multimodal approach and avoid premature pessimism in the first days.",
+        "primaryLabel": "Comatose care running",
+        "next": "p7",
+        "map": {
+          "col": 0,
+          "row": 4
+        }
+      },
+      "p7": {
+        "id": "p7",
+        "kind": "outcome",
+        "title": "Ongoing critical care",
+        "bullets": [
+          [
+            "Target PaO₂ 60–105 mm Hg · PaCO₂ 35–45 mm Hg (unless severe acidemia) · MAP ≥ 65 mm Hg"
+          ],
+          [
+            "Avoid hypoglycemia (< 70 mg/dL) and hyperglycemia (> 180 mg/dL)"
+          ],
+          [
+            "Consider antibiotics · coronary angiography when appropriate"
+          ],
+          [
+            "ICU admission — treat the precipitating cause; early cardiology/neurology involvement"
+          ]
+        ],
+        "map": {
+          "col": 0,
+          "row": 5
+        }
+      }
+    }
+  }
+]

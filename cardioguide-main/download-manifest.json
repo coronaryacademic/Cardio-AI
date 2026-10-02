@@ -1,0 +1,37 @@
+[
+  {
+    "path": "index.html",
+    "url": "https://cardioguide.ai/",
+    "bytes": 26777
+  },
+  {
+    "path": "favicon-32.png",
+    "url": "https://cardioguide.ai/favicon-32.png",
+    "bytes": 3085
+  },
+  {
+    "path": "favicon-96.png",
+    "url": "https://cardioguide.ai/favicon-96.png",
+    "bytes": 17679
+  },
+  {
+    "path": "favicon-180.png",
+    "url": "https://cardioguide.ai/favicon-180.png",
+    "bytes": 45608
+  },
+  {
+    "path": "styles-FI445VZO.css",
+    "url": "https://cardioguide.ai/styles-FI445VZO.css",
+    "bytes": 46899
+  },
+  {
+    "path": "polyfills-FFHMD2TL.js",
+    "url": "https://cardioguide.ai/polyfills-FFHMD2TL.js",
+    "bytes": 34519
+  },
+  {
+    "path": "main-7MDN5LRY.js",
+    "url": "https://cardioguide.ai/main-7MDN5LRY.js",
+    "bytes": 291649
+  }
+]
